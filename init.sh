@@ -1,6 +1,7 @@
 #!/bin/bash
+sleep 10
 
-mongo <<EOF
+mongosh <<EOF
 var config = {
     "_id": "rs0",
     "version": 1,

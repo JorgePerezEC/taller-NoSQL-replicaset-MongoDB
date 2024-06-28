@@ -1,49 +1,39 @@
 version: "3"
 services:
   mongo1:
+    image: mongo:5.0.6
     hostname: mongo1
     container_name: mongo1
-    image: mongo:5.0.6
-    expose:
-      - 27017
     ports:
       - 27011:27017
-    restart: always
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
-    networks:
-      - replset-network
     volumes:
       - ./data/db1:/data/db
-      - ./init.sh:/scripts/init.sh
+      - ./scripts/init.sh:/scripts/init.sh
+    networks:
+      - replset-network
+    entrypoint: ["/usr/bin/mongod", "--replSet", "rs0", "--bind_ip_all"]
   mongo2:
+    image: mongo:5.0.6
     hostname: mongo2
     container_name: mongo2
-    image: mongo:5.0.6
-    expose:
-      - 27017
     ports:
       - 27012:27017
-    restart: always
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
-    networks:
-      - replset-network
     volumes:
       - ./data/db2:/data/db
-  mongo3:
-    hostname: mongo3
-    container_name: mongo3
-    image: mongo:5.0.6
-    expose:
-      - 27017
-    ports:
-      - 27013:27017
-    restart: always
     networks:
       - replset-network
-    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "rs0" ]
+    entrypoint: ["/usr/bin/mongod", "--replSet", "rs0", "--bind_ip_all"]
+  mongo3:
+    image: mongo:5.0.6
+    hostname: mongo3
+    container_name: mongo3
+    ports:
+      - 27013:27017
     volumes:
       - ./data/db3:/data/db
-
+    networks:
+      - replset-network
+    entrypoint: ["/usr/bin/mongod", "--replSet", "rs0", "--bind_ip_all"]
 
 networks:
   replset-network:
