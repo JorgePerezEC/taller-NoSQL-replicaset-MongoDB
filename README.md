@@ -66,7 +66,7 @@ Ingresa al bash de MongoDB dentro de uno de nuestros dockers:
 Verificar el Estado del Replicaset:
 
 ```bash
-  $ rs.status()
+  > rs.status()
 ```
 
 ## Simulación de fallo de un nodo de nuestro replica set
@@ -97,5 +97,5 @@ Ingresa al nodo primario.
 ```
 
 ```bash
-  $ rs.stepDown()
+  > rs.stepDown()
 ```
