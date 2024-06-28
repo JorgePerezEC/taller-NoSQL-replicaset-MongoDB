@@ -1,0 +1,75 @@
+// CREAR DB
+use dbBiblioteca
+
+// Crear la colección de libros
+db.createCollection("libros")
+
+// Crear la colección de autores
+db.createCollection("autores")
+
+// Crear la colección de préstamos
+db.createCollection("prestamos")
+
+// Insertar Documentos en las Colecciones
+db.libros.insertMany([
+  {
+    titulo: "Cien Años de Soledad",
+    autor_id: 1,
+    genero: "Ficción",
+    año_publicacion: 1967
+  },
+  {
+    titulo: "Don Quijote de la Mancha",
+    autor_id: 2,
+    genero: "Clásico",
+    año_publicacion: 1605
+  }
+])
+
+//Insertar autores
+db.autores.insertMany([
+  {
+    autor_id: 1,
+    nombre: "Gabriel García Márquez",
+    pais: "Colombia"
+  },
+  {
+    autor_id: 2,
+    nombre: "Miguel de Cervantes",
+    pais: "España"
+  }
+])
+
+// Insertar prestamos
+db.prestamos.insertMany([
+  {
+    libro_id: 1,
+    fecha_prestamo: new Date("2024-06-01"),
+    fecha_devolucion: new Date("2024-06-15"),
+    usuario: "Juan Pérez"
+  },
+  {
+    libro_id: 2,
+    fecha_prestamo: new Date("2024-06-10"),
+    fecha_devolucion: null,
+    usuario: "María López"
+  }
+])
+
+//FILTRAR INFO
+db.libros.find({ genero: "Ficción" })
+db.libros.find({ año_publicacion: { $gt: 1900 } })
+db.libros.find({ autor_id: 1 })
+db.prestamos.find({ fecha_devolucion: null })
+db.prestamos.find({ usuario: "María López" })
+
+//ACTUALIZAR INFO
+db.libros.updateOne(
+  { titulo: "Cien Años de Soledad" },
+  { $set: { genero: "Realismo Mágico" } }
+)
+//ELIMINAR UN LIBRO
+db.libros.deleteOne({ titulo: "Don Quijote de la Mancha" })
+
+// ELIMINAR DB
+//db.dropDatabase()
